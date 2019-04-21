@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="index.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+    const params1 = {  name:"zs", obj:{num:10}}
+    const params2 = {  obj:{sex:'man'} }
+    // console.log($.extend(params1, params2))
+    console.log($.extend(true,{}, params1, params2))
+</script>
+</html>

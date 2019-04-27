@@ -16,6 +16,7 @@ class MyPromise {
     }.bind(this), 0);
     return this
   }
+  all(){}
   resolve(){
     if(this.state === stateArr[0]) {
       const args = Array.prototype.slice.apply(arguments)

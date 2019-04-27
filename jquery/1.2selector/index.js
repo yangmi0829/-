@@ -53,6 +53,8 @@
                 this.context = this[0] = selector;
                 this.length = 1;
                 return this;
+            }else if(jQuery.isFunction(selector)){// 如果是方法
+                jQuery.ready(selector)
             }
 
         },
@@ -62,8 +64,9 @@
         //....
     }
 
+    var readyList = []
+    var isReady = false
     jQuery.fn.init.prototype = jQuery.fn;
-
 
     jQuery.extend = jQuery.prototype.extend = function() {
         var target = arguments[0] || {};
@@ -114,7 +117,26 @@
         return target;
     }
 
-
+    var readyHandl =  function (e) {
+        console.log('DOMContentLoaded')
+        readyList.forEach(function (cb) {
+            cb()
+        })
+        isReady = true
+        readyList = null
+    }
+    jQuery.extend({
+        ready: function (fn) {
+            if(!isReady){
+                readyList.push(fn)
+            }
+            this.contentLoaded()
+        },
+        contentLoaded:function () {
+            // document.removeEventListener('DOMContentLoaded',readyHandl)
+            window.addEventListener('DOMContentLoaded',readyHandl)
+        }
+    })
     jQuery.extend({
         //类型检测
         isPlainObject: function(obj) {

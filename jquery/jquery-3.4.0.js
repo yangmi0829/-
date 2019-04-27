@@ -3906,6 +3906,7 @@
 
 // The ready event handler and self cleanup method
     function completed() {
+        console.log('DOMContentLoaded')
         document.removeEventListener( "DOMContentLoaded", completed );
         window.removeEventListener( "load", completed );
         jQuery.ready();

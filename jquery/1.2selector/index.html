@@ -7,10 +7,21 @@
 <body>
 <div id="box"></div>
 <script src="index.js"></script>
+<!--<script src="../jquery-3.4.0.js"></script>-->
 <script>
-    console.log($("<a>"))  //创建DOM
-    console.log($("#box"))
-    console.log($(document))
+    // console.log($("<a>"))  //创建DOM
+    // console.log($("#box"))
+    // console.log($(document))
+    $(function () {
+        console.log(1)
+        console.log(this)
+    })
+    $(function () {
+        console.log(2)
+        console.log(this)
+    })
+
+
 </script>
 </body>
 </html>

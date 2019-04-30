@@ -54,12 +54,19 @@
       },key,value)
     },
     html:function (value) {
-      return jQuery.access(this, function (key,value){
-        const nodeList = [].slice.call(this)
-        value && nodeList.forEach(item => item.innerHTML = value)
-        return value ? this:nodeList.map(item => item.innerHTML)
-      },null,value)
-    },
+          return jQuery.access(this, function (key,value){
+              const nodeList = [].slice.call(this)
+              value && nodeList.forEach(item => item.innerHTML = value)
+              return value ? this:nodeList.map(item => item.innerHTML)
+          },null,value)
+      },
+      addClass:function (value) {
+          return jQuery.access(this, function (key,value){
+              const nodeList = [].slice.call(this)
+              value && nodeList.forEach(item => item.className += ` ${value}`)
+              return value ? this:nodeList.map(item => item.innerHTML)
+          },null,value)
+      },
   }
 
   jQuery.fn.init.prototype = jQuery.fn;
@@ -117,10 +124,8 @@
     access:function( elems, fn, key, value){
       // const len = elems.length
       // const nodeList = [].slice.call(elems)
-      let chain = false;
-      value && (chain = true)
-      fn.call(elems,key,value)
-      return chain?elems:fn.call(elems, key, value)
+        value && fn.call(elems,key,value)
+      return value ? elems : fn.call(elems, key, value)
     },
   })
   root.jQuery = root.$ = jQuery;

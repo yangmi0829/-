@@ -3906,7 +3906,6 @@
 
 // The ready event handler and self cleanup method
     function completed() {
-        console.log('DOMContentLoaded')
         document.removeEventListener( "DOMContentLoaded", completed );
         window.removeEventListener( "load", completed );
         jQuery.ready();
@@ -4377,7 +4376,7 @@
                 startLength = queue.length,
                 fn = queue.shift(),
                 hooks = jQuery._queueHooks( elem, type ),
-                next = function() {
+                next = function(val) {
                     jQuery.dequeue( elem, type );
                 };
 

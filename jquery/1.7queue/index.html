@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../jquery-3.4.0.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    const app = $("#app")
+    function fn1(next){
+        console.log(1)
+        next()
+        next()
+    }
+    function fn2(next){
+        console.log(2)
+        setTimeout(function () {
+            console.log('setTimeout')
+        },0)
+        //next()
+    }
+    function fn3(next){
+        console.log(3)
+        //next()
+    }
+    // $.queue(app, 'my',fn1 )
+    // $.queue(app, 'my',fn2 )
+    // $.queue(app, 'my',fn3 )
+    // $.dequeue(app, 'my',)
+    const myQueue = new MyQueue()
+    myQueue.queue( 'my',fn1 )
+    myQueue.queue('my',fn2 )
+    myQueue.queue('my',fn3 )
+    myQueue.dequeue('my')
+    myQueue.queue( 'my2',fn1 )
+    myQueue.queue('my2',fn2 )
+    myQueue.queue('my2',fn3 )
+    myQueue.dequeue('my2')
+    //console.log(myQueue)
+</script>
+</html>

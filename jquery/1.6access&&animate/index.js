@@ -67,6 +67,31 @@
               return value ? this:nodeList.map(item => item.innerHTML)
           },null,value)
       },
+      //目前写死
+      animate:function (option, duration) {
+          let len = this.length
+          const elems = [].slice.call(this)
+          const left_to = option.left.trim().replace("px","");
+          const now = Date.now()
+
+          elems.forEach(item => {
+            let left_from = item.offsetLeft
+            const distance = left_to - left_from
+            let interval = setInterval(function () {
+                const pass = Date.now() - now
+                const percent = pass / duration
+                //console.log(percent)
+                if (percent >= 1) {
+                    clearInterval(interval)
+                    return
+                }
+                const left_now = left_from + percent * distance
+                item.style.left = left_now + 'px'
+            },13)
+          })
+
+
+      }
   }
 
   jQuery.fn.init.prototype = jQuery.fn;

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .pink{
+            color: pink;
+        }
+        .app{
+            width: 50px;
+            height: 50px;
+            margin-top: 20px;
+            background-color: red;
+            position: absolute;
+            left: 10px;
+        }
+        .app2{
+            top: 100px;
+        }
+    </style>
+    <script src="index.js"></script>
+    <!--<script src="jquery-3.4.0.js"></script>-->
+</head>
+<body>
+    <div class="app" id='app' style="font-size: 15px;">111</div>
+    <div class="app app2" style="color: blue;">222</div>
+</body>
+<script>
+    /*暂时未考虑各种参数形式*/
+// console.log($('.app').text(11))
+// console.log($('.app').css('color'))
+// console.log($('.app').html("<p>222</p>"))
+// console.log($('.app').addClass("pink"))
+    $(".app").animate({
+        left:"500px"
+    },2000)
+
+    // const now = Date.now()
+    // let interval = setInterval(function () {
+    //     const pass = Date.now() - now
+    //     console.log(pass)
+    //     pass > 1000 && clearInterval(interval)
+    // },1)
+</script>
+</html>

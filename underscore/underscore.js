@@ -1631,6 +1631,7 @@
 
     // Add your own custom functions to the Underscore object.
     _.mixin = function(obj) {
+        console.log(_.functions(obj))
         _.each(_.functions(obj), function(name) {
             var func = _[name] = obj[name];
             _.prototype[name] = function() {

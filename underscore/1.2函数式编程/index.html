@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="index.js"></script>
+    <!--<script src="../underscore.js"></script>-->
+</head>
+<body>
+
+</body>
+<script>
+// console.log(_.unique([1,2,3,4,5,5]))
+//
+// console.log(_.unique(['a','A'],function (val) {
+//     return val.toLowerCase()
+// }))
+    console.log(_([1,2,3,3]).chain().unique().map(item => item * 3).filter(item => item != 3).value())
+</script>
+</html>

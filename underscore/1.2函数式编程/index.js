@@ -1,7 +1,10 @@
 (function (root) {
     const _ = function(obj){
+        // console.log("aaa")
         if (obj instanceof _) return obj;
+        // console.log("bbb")
         if (!(this instanceof _)) return new _(obj);
+        // console.log("ccc")
         this._wrapped = obj;
     }
     _.chain = function(obj) {
@@ -32,8 +35,8 @@
     }
     _.map = function (obj,fn) {
         fn = defaultFn(fn)
-        return obj.map(item => {
-            return fn(item)
+        return obj.map((item,index , array) => {
+            return fn(item,index , array)
         })
     }
     _.filter = function (obj,fn) {
@@ -42,20 +45,23 @@
     }
 
     var defaultFn = function (fn) {
-        return fn || function (val) {
+        return fn || function (val,index, array) {
             return val
         }
     }
 
     var result = function(instance, obj) {
+        // console.log(obj)
         return instance._chain ? _(obj).chain() : obj;
     };
     _.mixin = function(obj){
         const keys = Object.keys(obj)
-        console.log(keys)
+        // console.log(keys)
         keys.forEach(key => {
             obj.prototype[key] = function (fn) {
-                return result(this,obj[key].call(_,this._wrapped,fn))
+                const args = [this._wrapped,...[].slice.call(arguments)]
+                // console.log(args)
+                return result(this,obj[key].apply(_,args))
             }
         })
         return _

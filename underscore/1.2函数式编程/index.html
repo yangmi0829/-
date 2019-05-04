@@ -15,6 +15,8 @@
 // console.log(_.unique(['a','A'],function (val) {
 //     return val.toLowerCase()
 // }))
-    console.log(_([1,2,3,3]).chain().unique().map(item => item * 3).filter(item => item != 3).value())
+    console.log(_([1,2,3,3]).chain().unique().map((item,index,array) => {
+        return index > 1 ? item * 3 : item * 2
+    }).filter(item => item != 3).value())
 </script>
 </html>

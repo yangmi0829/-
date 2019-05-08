@@ -15,3 +15,18 @@ function restArguements(fn) {
         }
     }
 }
+
+var Ctor = function(){};
+
+function baseCreate(obj) {
+    if(typeof obj !== 'object'){
+        return {}
+    }
+    if(Object.create){
+        return Object.create(obj)
+    }
+    Ctor.prototype = obj;
+    var result = new Ctor;
+    Ctor.prototype = null;
+    return result
+}

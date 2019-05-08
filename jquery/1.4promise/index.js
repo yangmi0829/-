@@ -1,4 +1,4 @@
-const stateArr =  ['padding','resolve','reject']
+const stateArr =  ['pending','resolve','reject']
 class MyPromise {
   constructor (fn){
     this.state = stateArr[0]

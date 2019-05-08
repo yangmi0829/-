@@ -14,7 +14,7 @@ const obj = {
   name:"world",
   age:"18",
 }
-var str = 'hello,<%= name %>,<%- age %>,<% console.log(2);obj.age=19;console.log(1) %>,<%- age %>,'
+var str = 'hello,<%= name %>,<%= age %>,<% console.log(2);age=19; %>,<%- age %>,'
 // 1 获取模板
 // 2 渲染数据
 console.log(template(str)(obj))

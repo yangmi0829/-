@@ -3,49 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="index.js"></script>
+    <script src="../../underscore/underscore.js"></script>
 </head>
 <body>
 
 </body>
 <script>
-
-/**
- * <%=%> 常量
- * <%-%> 特殊字符
- * <% %> js代码
- *
- * @type {string}
- */
-const data = {
+const obj = {
   name:"world",
   age:"18",
 }
-const setting = {
-  constants: /<%=\s*(.*?)\s*%>/,
-  char: /<%-\s*(.*?)\s*%>/,
-  code: /<%\s*(.*?)\s*%>/,
-}
-var regex = new RegExp(Object.values(setting).map(item => item.source).join("|"),'g')
-function template (str) {
-  return str.replace(regex,function (match,constants,char,code) {
-    if(constants){
-      return eval('data.'+constants)
-    }else if(code){
-      eval(code)
-    }else if(char){
-      return eval('data.'+char)
-    }
-  })
-}
+var str = 'hello,<%= name %>,<%- age %>,<% console.log(2);obj.age=19;console.log(1) %>,<%- age %>,'
+// 1 获取模板
+// 2 渲染数据
+console.log(template(str)(obj))
 
-
-with (data || {}) {
-  console.log(name)
-}
-
-
-
-var str = 'hello,<%= name %>,<%- age %>,<% alert(1) %>'
-console.log(template(str))
+// console.log(new Function('a','b','return a + b')(1,2))
+// var  obj = { 'user': 'fred' }
+// var s = 'hello <%=user%> <%obj.user="zs" %> <%=user%>!'
+// var compiled = _.template(s);
+// console.log(compiled(obj))
 </script>
 </html>

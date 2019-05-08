@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+
+/**
+ * <%=%> 常量
+ * <%-%> 特殊字符
+ * <% %> js代码
+ *
+ * @type {string}
+ */
+const data = {
+  name:"world",
+  age:"18",
+}
+const setting = {
+  constants: /<%=\s*(.*?)\s*%>/,
+  char: /<%-\s*(.*?)\s*%>/,
+  code: /<%\s*(.*?)\s*%>/,
+}
+var regex = new RegExp(Object.values(setting).map(item => item.source).join("|"),'g')
+function template (str) {
+  return str.replace(regex,function (match,constants,char,code) {
+    if(constants){
+      return eval('data.'+constants)
+    }else if(code){
+      eval(code)
+    }else if(char){
+      return eval('data.'+char)
+    }
+  })
+}
+
+
+with (data || {}) {
+  console.log(name)
+}
+
+
+
+var str = 'hello,<%= name %>,<%- age %>,<% alert(1) %>'
+console.log(template(str))
+</script>
+</html>

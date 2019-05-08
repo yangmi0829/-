@@ -21,7 +21,9 @@ function complier (str, data) {
     if(constants){
       return data[constants]
     }else if(code){
-      eval(code)
+      eval(`with (data || {}) {
+        eval(code)
+      }`)
       return ''
     }else if(char){
       return data[char]

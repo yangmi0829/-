@@ -21,9 +21,10 @@ function complier (str, data) {
     if(constants){
       return data[constants]
     }else if(code){
-      eval(`with (data || {}) {
-        eval(code)
-      }`)
+     // 执行代码
+      new Function('data',`with (data || {}) {
+        ${code}
+      }`)(data)
       return ''
     }else if(char){
       return data[char]

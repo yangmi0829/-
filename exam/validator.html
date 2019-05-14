@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-3.4.0.js"></script>
+    <style>
+        .error{
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <div>身份证:<input name="idcard" idcard required></div>
+        <div>电话号码:<input name="phone" phone required></div>
+        <div>邮箱:<input name="email" email required></div>
+        <div>范围:<input  name="num" type="number" max="50" min="10"></div>
+        <div>描述：<textarea required></textarea></div>
+        <div>
+            <select >
+                <option name="">1</option>
+                <option name="">2</option>
+            </select>
+        </div>
+        <button onclick="submitForm()" type="button">提交</button>
+    </form>
+</body>
+<script>
+    //表单校验，默认触发事件 change，
+    //至少包括身份证号码验证，手机号码验证，电子邮件验证，必填字段验证，最大值最小值
+    $.fn.extend({
+        validate:function (options) {
+            // 1.初始化参数
+            if(!$.isPlainObject(options)){
+                options = {
+                    defaultEvent: "change"
+                }
+            }
+            if(!options.defaultEvent){
+                options.defaultEvent = 'change'
+            }
+            console.log(this.find("input"))
+            this.validateInput(this.find("input"),options.defaultEvent)
+            this.validateTextarea(this.find("textarea"),options.defaultEvent)
+            this.validateSelect(this.find("select"),"change")
+            this.validateCheckbox(this.find("input"),"change")
+        },
+        validateInput:function (el,event) {
+            event = event || 'change'
+            el.each((index,el)=> {
+                this.validateItem(el,event)
+            })
+        },
+        validateTextarea:function (el,event) {
+            event = event || 'change'
+            el.each((index,el)=> {
+                // 只校验是否必须
+                if(el.getAttribute("required")){
+                    this.validateItem(el)
+                }
+            })
+        },
+        validateSelect:function (el,event) {
+            event = event || 'change'
+            el.each((index,el)=> {
+                // 只校验是否必须
+                if(el.getAttribute("required")){
+                    this.validateItem(el)
+                }
+            })
+        },
+        validateCheckbox:function (el,event) {
+            event = event || 'change'
+            el.each((index,el)=> {
+                // 只校验是否必须
+                if(el.getAttribute("required")){
+                    this.validateItem(el)
+                }
+            })
+        },
+        validateItem(el,type){
+            let result = true;
+            const hasMax = el.hasAttribute("max")
+            const hasMin = el.hasAttribute("max")
+            const value = el.value
+            if(el.hasAttribute("phone")){
+                if(!this.validatePhone(value)){
+                    result =  false
+                }
+            }else if(el.hasAttribute("idcard")){
+                if(!this.validateIdcard(value)){
+                    result =  false
+                }
+            }else if(el.hasAttribute("email")){
+                if(!this.validateEmail(value)){
+                    result =  false
+                }
+            }else if( hasMax || hasMin){
+                const max = +el.getAttribute("max")
+                const min = +el.getAttribute("min")
+                if(isNaN(+(value))){// 如果不是数字
+                    result =  false
+                }else if(!isNaN(max)){
+                    max >= value ? "" : result =  false
+                }else if(!isNaN(min)){
+                    min <= value ? "" : result =  false
+                }
+            }
+            if(!result){
+                el.classList.add("error")
+            }else{
+                el.classList.remove("error")
+            }
+        },
+        validateByRegex(val,regex){
+            return regex ? regex.test(val) : true
+        },
+        validatePhone(val){
+            const regex = /^1(\d){10}$/
+            return this.validateByRegex(val,regex)
+        },
+        validateIdcard(val){
+            const regex = /^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/
+            return this.validateByRegex(val,regex)
+        },
+        validateEmail(val){
+            const regex = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+            return this.validateByRegex(val,regex)
+        },
+    })
+    function submitForm() {
+        $("form").validate()
+    }
+</script>
+</html>

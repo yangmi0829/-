@@ -6,24 +6,16 @@
     <script src="jquery-3.4.0.js"></script>
     <style>
         .error{
-            border: 1px solid red;
+            border: 2px solid red;
         }
     </style>
 </head>
 <body>
     <form>
-        <div>身份证:<input name="idcard" idcard required></div>
-        <div>电话号码:<input name="phone" phone required></div>
-        <div>邮箱:<input name="email" email required></div>
+        <div>身份证:<input name="idcard" idcard ></div>
+        <div>电话号码:<input name="phone" phone ></div>
+        <div>邮箱:<input name="email" email ></div>
         <div>范围:<input  name="num" type="number" max="50" min="10"></div>
-        <div>描述：<textarea required></textarea></div>
-        <div>
-            <select >
-                <option name="">1</option>
-                <option name="">2</option>
-            </select>
-        </div>
-        <button onclick="submitForm()" type="button">提交</button>
     </form>
 </body>
 <script>
@@ -53,65 +45,52 @@
             })
         },
         validateTextarea:function (el,event) {
-            event = event || 'change'
-            el.each((index,el)=> {
-                // 只校验是否必须
-                if(el.getAttribute("required")){
-                    this.validateItem(el)
-                }
-            })
         },
         validateSelect:function (el,event) {
-            event = event || 'change'
-            el.each((index,el)=> {
-                // 只校验是否必须
-                if(el.getAttribute("required")){
-                    this.validateItem(el)
-                }
-            })
         },
         validateCheckbox:function (el,event) {
-            event = event || 'change'
-            el.each((index,el)=> {
-                // 只校验是否必须
-                if(el.getAttribute("required")){
-                    this.validateItem(el)
-                }
-            })
         },
         validateItem(el,type){
-            let result = true;
-            const hasMax = el.hasAttribute("max")
-            const hasMin = el.hasAttribute("max")
-            const value = el.value
-            if(el.hasAttribute("phone")){
-                if(!this.validatePhone(value)){
+            $(el).on(type, () =>{
+                let result = true;
+                const hasMax = el.hasAttribute("max")
+                const hasMin = el.hasAttribute("max")
+                const required = el.hasAttribute("required")
+                const value = el.value
+                if(!value &&  required){
                     result =  false
+                } else  if(value){
+                    if(el.hasAttribute("phone")){
+                        if(!this.validatePhone(value)){
+                            result =  false
+                        }
+                    }else if(el.hasAttribute("idcard")){
+                        if(!this.validateIdcard(value)){
+                            result =  false
+                        }
+                    }else if(el.hasAttribute("email")){
+                        if(!this.validateEmail(value)){
+                            result =  false
+                        }
+                    }else if( hasMax || hasMin){
+                        const max = + (el.getAttribute("max") || Infinity)
+                        const min = +(el.getAttribute("min") || -Infinity)
+                        const value_num = +(value)
+                        if(isNaN(value_num)){// 如果不是数字
+                            result =  false
+                        }else{
+                            const num_arr = [min,value_num, max].sort((a,b) => a -b)
+                            num_arr[1] == value_num ? "" : result =  false
+                        }
+                    }
                 }
-            }else if(el.hasAttribute("idcard")){
-                if(!this.validateIdcard(value)){
-                    result =  false
+
+                if(!result){
+                    el.classList.add("error")
+                }else{
+                    el.classList.remove("error")
                 }
-            }else if(el.hasAttribute("email")){
-                if(!this.validateEmail(value)){
-                    result =  false
-                }
-            }else if( hasMax || hasMin){
-                const max = +el.getAttribute("max")
-                const min = +el.getAttribute("min")
-                if(isNaN(+(value))){// 如果不是数字
-                    result =  false
-                }else if(!isNaN(max)){
-                    max >= value ? "" : result =  false
-                }else if(!isNaN(min)){
-                    min <= value ? "" : result =  false
-                }
-            }
-            if(!result){
-                el.classList.add("error")
-            }else{
-                el.classList.remove("error")
-            }
+            })
         },
         validateByRegex(val,regex){
             return regex ? regex.test(val) : true
@@ -129,8 +108,9 @@
             return this.validateByRegex(val,regex)
         },
     })
-    function submitForm() {
-        $("form").validate()
-    }
+
+    $("form").validate({
+        defaultEvent: "input"
+    })
 </script>
 </html>

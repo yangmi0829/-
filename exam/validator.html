@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="jquery-3.4.0.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <style>
         .error{
             border: 2px solid red;
@@ -12,15 +12,15 @@
 </head>
 <body>
     <form>
-        <div>身份证:<input name="idcard" idcard ></div>
-        <div>电话号码:<input name="phone" phone ></div>
+        <div>身份证:<input  name="idcard" idcard ></div>
+        <div><span style="color: red">*</span>电话号码:<input required name="phone" phone ></div>
         <div>邮箱:<input name="email" email ></div>
-        <div>范围:<input  name="num" type="number" max="50" min="10"></div>
+        <div>范围10-50:<input  name="num" type="number" max="50" min="10"></div>
     </form>
 </body>
 <script>
     //表单校验，默认触发事件 change，
-    //至少包括身份证号码验证，手机号码验证，电子邮件验证，必填字段验证，最大值最小值
+    //至少包括身份证号码验证(idcard)，手机号码验证(phone)，电子邮件验证(email)，必填字段验证(required)，最大值最小值(min,max)
     $.fn.extend({
         validate:function (options) {
             // 1.初始化参数
@@ -32,11 +32,10 @@
             if(!options.defaultEvent){
                 options.defaultEvent = 'change'
             }
-            console.log(this.find("input"))
             this.validateInput(this.find("input"),options.defaultEvent)
-            this.validateTextarea(this.find("textarea"),options.defaultEvent)
-            this.validateSelect(this.find("select"),"change")
-            this.validateCheckbox(this.find("input"),"change")
+            // this.validateTextarea(this.find("textarea"),options.defaultEvent)
+            // this.validateSelect(this.find("select"),"change")
+            // this.validateCheckbox(this.find("input"),"change")
         },
         validateInput:function (el,event) {
             event = event || 'change'
@@ -79,12 +78,12 @@
                         if(isNaN(value_num)){// 如果不是数字
                             result =  false
                         }else{
+                            // 判断是否在区间内，即排好序顺序是否在第二个
                             const num_arr = [min,value_num, max].sort((a,b) => a -b)
                             num_arr[1] == value_num ? "" : result =  false
                         }
                     }
                 }
-
                 if(!result){
                     el.classList.add("error")
                 }else{
@@ -110,7 +109,7 @@
     })
 
     $("form").validate({
-        defaultEvent: "input"
+        defaultEvent: "blur"
     })
 </script>
 </html>

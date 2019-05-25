@@ -1678,6 +1678,16 @@
         return String(this._wrapped);
     };
 
+    __ = window._
+    _.noConflict = function( key ) {
+
+        if ( key && toString.call(key) === '[object String]') {
+            window[key] = _;
+        }
+
+        return _;
+    };
+
     // AMD registration happens at the end for compatibility with AMD loaders
     // that may not enforce next-turn semantics on modules. Even though general
     // practice for AMD registration is to be anonymous, underscore registers

@@ -22,7 +22,7 @@
         return 1
     }
    // document.getElementById("input").oninput = fn
-    document.getElementById("input").oninput = _.throttle(fn,1000,true)
+    document.getElementById("input").oninput = debounce(fn,1000)
 
     function debounce(fn, delay, doNow) {
         let flag = true
@@ -46,7 +46,7 @@
         }
     }
 
-    function throttle(fn, delay, doNow) {
+    function throttle(fn, delay) {
         let lasttime = 0;
         delay = Number(delay) || 1000
         return function () {

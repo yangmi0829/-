@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <input id="input">
+</body>
+<script src="../underscore.js"></script>
+<script>
+    // var timer = null
+    // document.getElementById("input").oninput = function () {
+    //     clearTimeout(timer)
+    //     timer = setTimeout(() => {
+    //         console.log(this.value)
+    //     },1000)
+    // }
+    function fn(a){
+        console.log(a)
+        console.log(this.value)
+        return 1
+    }
+   // document.getElementById("input").oninput = fn
+    document.getElementById("input").oninput = _.throttle(fn,1000,true)
+
+    function debounce(fn, delay, doNow) {
+        let flag = true
+        let timer = null
+        delay = Number(delay) || 1000
+        return function() {
+            let result ;
+            const args = Array.prototype.slice.call(arguments)
+            const context = this
+            if(doNow && flag){  // 如果立即执行
+                flag = false
+                result = fn.apply(context, args)
+            }
+            if(timer !== null)   clearTimeout(timer);
+            var f = function(){
+                result = fn.apply(context, args)
+                return result
+            }
+            timer = setTimeout(f, delay);
+            return result
+        }
+    }
+
+    function throttle(fn, delay, doNow) {
+        let lasttime = 0;
+        delay = Number(delay) || 1000
+        return function () {
+            let result
+            const args = Array.prototype.slice.call(arguments)
+            const context = this
+            let remaining = delay - (now() - lasttime)
+            if(remaining <= 0){
+                lasttime = now()
+                result = fn.apply(context, args)
+            }
+            return result
+        }
+    }
+
+    function now() {
+        return Date.now()
+    }
+</script>
+</html>

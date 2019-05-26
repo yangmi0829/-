@@ -21,8 +21,7 @@
         console.log(this.value)
         return 1
     }
-   // document.getElementById("input").oninput = fn
-    document.getElementById("input").oninput = debounce(fn,1000)
+    document.getElementById("input").oninput = throttle(fn,1000,true)
 
     function debounce(fn, delay, doNow) {
         let flag = true
@@ -46,13 +45,20 @@
         }
     }
 
-    function throttle(fn, delay) {
+    function throttle(fn, delay, doNow) {
         let lasttime = 0;
+        var context;
+        var args;
+        var flag = true;
         delay = Number(delay) || 1000
+        if(doNow && flag){
+            flag = false
+            fn.apply(context, args)
+        }
         return function () {
             let result
-            const args = Array.prototype.slice.call(arguments)
-            const context = this
+            args = Array.prototype.slice.call(arguments)
+            context = this
             let remaining = delay - (now() - lasttime)
             if(remaining <= 0){
                 lasttime = now()

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../underscore.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+let fibonacci = MyMemoize(function(n) {
+  return n < 2 ? n : fibonacci(n - 2) + fibonacci(n - 1);
+});
+console.log(fibonacci)
+console.log(fibonacci(10))
+console.log(fibonacci.cache)
+
+
+
+function MyMemoize (fn) {
+  var memoize = function (key) {
+    var cache = memoize.cache
+    cache[key] ? '' : cache[key] = fn.apply(this, arguments);
+    return cache[key]
+  }
+  memoize.cache = {}
+  return memoize
+}
+</script>
+</html>

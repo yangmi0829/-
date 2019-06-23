@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .swiper {
+            overflow: hidden;
+        }
+        .swiper .swiper-container {
+
+            position: relative;
+            /* 让容器尽可能的宽，这样才能容纳更多的滑块 */
+            width: 10000%;
+            /* 让内部滑块可以排成一行 */
+            display: flex;
+
+            animation-name: swiper;
+            animation-duration: 10s;
+            animation-iteration-count: infinite;
+        }
+        .swiper .swiper-container .swiper-item {
+            /* 宽度设置1%会按照外层视图的宽度来铺满 */
+            width: 1%;
+            height: 300px;
+            background: #eee;
+        }
+
+        @keyframes swiper {
+            from{
+                left: 0;
+            }
+            50%{
+                left: -100%;
+            }
+            to{
+                left: -200%;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- 视图层 -->
+<div class="swiper">
+    <!-- 容器 -->
+    <div class="swiper-container ">
+        <!-- 滑块 -->
+        <div class="swiper-item" style="background: #000">1</div>
+        <div class="swiper-item" style="background: #4269eb">2</div>
+        <div class="swiper-item" style="background: #247902">3</div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    function A(name,age) {
+        this.name = name
+        this.age = age
+    }
+
+    console.log( new A('zs').name)
+    console.log(MyNew(A,'zs',18).name)
+
+    function MyNew() {
+        //创建一个空对象
+        let obj = {};
+        //获取构造函数
+        let clazz = [].shift.call(arguments);
+        debugger
+        //链接到原型
+        obj.__proto__ = clazz.prototype;
+        //绑定this值
+        let result = clazz.apply(obj,arguments);//使用apply，将构造函数中的this指向新对象，这样新对象就可以访问构造函数中的属性和方法
+        //返回新对象
+        return typeof result === "object" ? result : obj;//如果返回值是一个对象就返回该对象，否则返回构造函数的一个实例对象
+    }
+</script>
+</html>

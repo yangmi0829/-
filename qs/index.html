@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="qs.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+var qs = Qs
+var obj = {
+  name:'zs',
+  age:18,
+  list:[1,2,3]
+}
+const str = qs.stringify(obj)
+console.log(str)
+var obj = qs.parse(str);
+console.log(obj)
+</script>
+</html>

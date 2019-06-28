@@ -20,4 +20,8 @@ const obj = {
 
 
 const regex = /(?!,)(.+?)=(\[.+?]|.+?(?=,|$))/g
-console.log('list=[1,2,3],name=xesam,list=[1,2,3],age=24,list=[1,2,3]'.match(regex))
+const regex2 = /\w+=(\[.*?\]|[^,])+/g
+//console.log('list=[1,2,3],name=xesam,list=[1,2,3],age=24,list=[1,2,3]'.match(regex))
+const regex3 = /(?<=\[.*?),(?=.*?\])/g
+const regex4 = /(?<=\[.+?),(?=.+?])/g
+console.log('name=xesam,age=24,list=[1,2,3]'.replace(regex4,"|"))

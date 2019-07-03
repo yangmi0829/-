@@ -2,7 +2,6 @@
 // 钱正则 3位加逗号
 
 const password_regex = /^(?!\d{6,12}$)(?![a-zA-Z]{6,12}$)(\w{6,12}$)/g
-const money_regex = /\B(?=(?:\d{3})+(?!\d))/g
+const money_regex = /(?=(\d{3})+(?!\d))/g
 console.log(password_regex.test("012345678910"))
-
-console.log("12345678900".replace(money_regex,",") )
+console.log("1234567890".replace(money_regex,",") )
